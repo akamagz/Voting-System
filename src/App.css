@@ -1,6 +1,6 @@
-
 .mainContainer {
   display: flex;
+  position: fixed;
   justify-content: center;
   width: 100%;
   margin-top: 80px;
@@ -11,7 +11,7 @@
   margin-top: 16px;
   padding: 8px;
   border: 0;
-  border-radius: 5px;
+  border-radius: 8px;
   height: 100px;
   font-size: 20px;
   background-color: whitesmoke;
@@ -44,15 +44,27 @@
   color: #a0d4cd;
   text-align: center;
   font-size: 40px;
+  font-family: 'Leckerli One', cursive;
   font-weight: 600;
+  text-shadow: 0 7px rgba(0,0,0,.5);
   margin-bottom: 8px;
 }
 
 .bio {
   text-align: center;
   color: rgb(247, 244, 246);
-  font-size: 14px;
+  font-size: 18px;
   margin-top: 5px;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  opacity: 0;
+}
+
+.bio2 {
+  text-align: center;
+  color: rgb(247, 244, 246);
+  font-size: 14px;
+  margin-top: 3px;
   margin-bottom: 8px;
   line-height: 1.4;
 }
@@ -155,7 +167,7 @@
 .faucetlink {
   cursor: pointer;
   margin-top: 10px;
-  padding: 8px;
+  padding: 10px;
   background: #df5e48;
   border-radius: 8px;
   color: whitesmoke;
@@ -163,5 +175,6 @@
   text-align: center;
   margin-left: 12px;
   margin-right: 12px;
+  margin-bottom: 12px;
   text-decoration: underline #df5e48;
 }
