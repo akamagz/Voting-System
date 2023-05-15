@@ -22,7 +22,7 @@ const App = () => {
   const [connector, setConnector] = useState();
   const [connected, setConnected] = useState(false);
 
-  const app_address = 194533051;
+  const app_address = 167783659;
   const baseServer = 'https://testnet-algorand.api.purestake.io/ps2'
     const port = '';
     const token = {
@@ -142,7 +142,7 @@ const App = () => {
 
     setVoteState1("Processing...");
     await algodClient.sendRawTransaction(decodedResult).do();
-    await algosdk.waitForConfirmation(algodClient, txId, 1);
+    await algosdk.waitForConfirmation(algodClient, txId, 2);
     console.log("Adding to Count1")
     let transactionResponse = await algodClient.pendingTransactionInformation(txId).do();
     console.log("Called app-id:", transactionResponse['txn']['txn']['apid']);
@@ -150,7 +150,6 @@ const App = () => {
       console.log("Global State updated:", transactionResponse['global-state-delta']);
       await getCount();
     }
-    
     setVoteState1("Vote");
   }
 
@@ -217,7 +216,7 @@ const App = () => {
     });
     setVoteState3("Processing...");
     await algodClient.sendRawTransaction(decodedResult).do();
-    await algosdk.waitForConfirmation(algodClient, txId, 3);
+    await algosdk.waitForConfirmation(algodClient, txId, 2);
     console.log("Adding to Count3")
     let transactionResponse = await algodClient.pendingTransactionInformation(txId).do();
     console.log("Called app-id:", transactionResponse['txn']['txn']['apid']);
@@ -254,7 +253,7 @@ const App = () => {
     setVoteState3("Vote");
     getBalance();
     console.log('currentAccount:', currentAccount);
-  }, [currentAccount])
+  }, [currentAccount]);
 
   return (
     <div className="mainContainer">
@@ -263,10 +262,10 @@ const App = () => {
           Decentralized Voting
         </div>
         <div className="bio">
-          asdfasdfasdf dfasdf sdfdfdfdfdffdsadafsad asdfa dafsdf adsf adsf adsfa  dfasdf asdf asdf sdf sdfadsf dfasdf fdsfsd
+        asdfsda asdfsda asdfsda asdfsda asdfsda asdfsda asdfsda asdfsda asdfsda asdfsda asdfsda
         </div>
-        <div className="bio">
-          asdf asdf jasdhfj jasdfl
+        <div className='bio2'>
+          
         </div>
 
 
@@ -280,8 +279,8 @@ const App = () => {
           <>
             {walletbalance <= 0.01 && (
               <>
-                <div className="bio" >
-                  You don't have enough test algo in your wallet to vote.  Click the link below to the test Algo faucet, fund your account, then reload this page!
+                <div className="bio2" >
+                  You don't have enough test algo in your wallet to vote.  Click the link below to fund your account.
                 </div>
                 <a href="https://bank.testnet.algorand.network/" target="_blank">
                   <div className="faucetlink">
@@ -292,6 +291,7 @@ const App = () => {
             )}
             {walletbalance > 0.01 && (
               <>
+                <div className='wrapper-fixed-width'>
                 <div className='choices-container'>
                   <div className='row align-items-center'>
 
@@ -320,6 +320,7 @@ const App = () => {
                     </div>
 
                   </div>
+                </div>
                 </div>
               </>
             )}
