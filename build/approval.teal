@@ -2,23 +2,23 @@
 txn ApplicationID
 int 0
 ==
-bnz main_l18
+bnz main_l26
 txn OnCompletion
 int OptIn
 ==
-bnz main_l17
+bnz main_l25
 txn OnCompletion
 int CloseOut
 ==
-bnz main_l16
+bnz main_l24
 txn OnCompletion
 int UpdateApplication
 ==
-bnz main_l15
+bnz main_l23
 txn OnCompletion
 int DeleteApplication
 ==
-bnz main_l14
+bnz main_l22
 txn OnCompletion
 int NoOp
 ==
@@ -32,39 +32,45 @@ assert
 txna ApplicationArgs 0
 byte "Add1"
 ==
-bnz main_l13
+bnz main_l21
 txna ApplicationArgs 0
 byte "Add2"
 ==
-bnz main_l12
+bnz main_l20
 txna ApplicationArgs 0
 byte "Add3"
 ==
-bnz main_l11
+bnz main_l19
+txna ApplicationArgs 0
+byte "vote"
+==
+bnz main_l12
 err
-main_l11:
-byte "Count3"
-app_global_get
-store 0
-byte "Count3"
-load 0
-int 1
-+
-app_global_put
-int 1
-return
 main_l12:
-byte "Count2"
-app_global_get
-store 0
-byte "Count2"
-load 0
+int 0
+global CurrentApplicationID
+byte "voted"
+app_local_get_ex
+store 1
+store 2
+load 1
+bnz main_l18
+int 0
+byte "voted_accounts"
+app_global_get_ex
+store 3
+store 4
+load 3
+bnz main_l17
+load 3
+bnz main_l16
+int 0
+byte "voted"
 int 1
-+
+app_local_put
+byte "voted_accounts"
+int 1
 app_global_put
-int 1
-return
-main_l13:
 byte "Count1"
 app_global_get
 store 0
@@ -75,11 +81,27 @@ int 1
 app_global_put
 int 1
 return
-main_l14:
-int 0
+byte "Count2"
+app_global_get
+store 0
+byte "Count2"
+load 0
+int 1
++
+app_global_put
+int 1
 return
-main_l15:
-int 0
+byte "Count3"
+app_global_get
+store 0
+byte "Count3"
+load 0
+int 1
++
+app_global_put
+int 1
+return
+int 1
 return
 main_l16:
 int 0
@@ -88,14 +110,62 @@ main_l17:
 int 0
 return
 main_l18:
+int 0
+return
+main_l19:
+byte "Count3"
+app_global_get
+store 0
+byte "Count3"
+load 0
+int 1
++
+app_global_put
+int 1
+return
+main_l20:
+byte "Count2"
+app_global_get
+store 0
+byte "Count2"
+load 0
+int 1
++
+app_global_put
+int 1
+return
+main_l21:
+byte "Count1"
+app_global_get
+store 0
+byte "Count1"
+load 0
+int 1
++
+app_global_put
+int 1
+return
+main_l22:
+int 0
+return
+main_l23:
+int 0
+return
+main_l24:
+int 1
+return
+main_l25:
+int 1
+return
+main_l26:
 byte "Count1"
 int 0
 app_global_put
 byte "Count2"
-int 1
+int 0
 app_global_put
 byte "Count3"
-int 2
+int 0
 app_global_put
 int 1
 return
