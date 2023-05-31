@@ -15,6 +15,7 @@ const App = () => {
   const [voteState1, setVoteState1] = useState("Vote");
   const [voteState2, setVoteState2] = useState("Vote");
   const [voteState3, setVoteState3] = useState("Vote");
+  const [hasVoted, setHasVoted] = useState(false);
   const [Count1, setCount1] = useState(0);
   const [Count2, setCount2] = useState(0);
   const [Count3, setCount3] = useState(0);
@@ -22,7 +23,7 @@ const App = () => {
   const [connector, setConnector] = useState();
   const [connected, setConnected] = useState(false);
 
-  const app_address = 167783659;
+  const app_address = 224015731;
   const baseServer = 'https://testnet-algorand.api.purestake.io/ps2'
     const port = '';
     const token = {
@@ -34,6 +35,7 @@ const App = () => {
       try {
         if (!connected) {
           console.log("No connection");
+          setHasVoted(false);
           return;
         } else {
           console.log("We have connection", connector);
@@ -49,6 +51,7 @@ const App = () => {
       } else {
         setCurrentAccount();
         console.log("No authorized account found");
+        setHasVoted(false);
       }
     } catch (error) {
       console.log(error);
@@ -61,6 +64,7 @@ const App = () => {
     setCurrentAccount();
     setConnector();
     setConnected(false);
+    setHasVoted(false);
   }
 
   const connectWallet = async () => {
@@ -151,6 +155,10 @@ const App = () => {
       await getCount();
     }
     setVoteState1("Vote");
+
+    if (transactionResponse['global-state-delta'] !== undefined) {
+      setHasVoted(true);
+  }
   }
 
   const add2 = async () => {
@@ -188,6 +196,10 @@ const App = () => {
       await getCount();
     }
     setVoteState2("Vote");
+
+    if (transactionResponse['global-state-delta'] !== undefined) {
+      setHasVoted(true);
+  }
   }
 
   const add3 = async () => {
@@ -225,6 +237,10 @@ const App = () => {
       await getCount();
     }
     setVoteState3("Vote");
+
+    if (transactionResponse['global-state-delta'] !== undefined) {
+      setHasVoted(true);
+  }
   }
 
   const getBalance = async () => {
@@ -253,6 +269,12 @@ const App = () => {
     setVoteState3("Vote");
     getBalance();
     console.log('currentAccount:', currentAccount);
+  }, [currentAccount]);
+
+  useEffect(() => {
+    if (currentAccount) {
+      setHasVoted(false);
+    }
   }, [currentAccount]);
 
   return (
@@ -299,7 +321,9 @@ const App = () => {
                       <div className='choices-card'>
                         <div className='title'> Choice 1 </div>
                         <div className='count'>{Count1}</div>
-                        <button className='mathButton' onClick={add1}>{voteState1}</button>
+                        {!hasVoted && (
+                          <button className='mathButton' onClick={add1} disabled={!currentAccount}>{voteState1}</button>
+                        )}
                       </div>
                     </div>
 
@@ -307,7 +331,9 @@ const App = () => {
                       <div className='choices-card'>
                         <div className='title'> Choice 2 </div>
                         <div className='count'>{Count2}</div>
-                        <button className='mathButton' onClick={add2}>{voteState2}</button>
+                        {!hasVoted && (
+                          <button className='mathButton' onClick={add2} disabled={!currentAccount}>{voteState2}</button>
+                        )}
                       </div>
                     </div>
 
@@ -315,7 +341,9 @@ const App = () => {
                       <div className='choices-card'>
                         <div className='title'> Choice 3 </div>
                         <div className='count'>{Count3}</div>
-                        <button className='mathButton' onClick={add3}>{voteState3}</button>
+                        {!hasVoted && (
+                          <button className='mathButton' onClick={add3} disabled={!currentAccount}>{voteState3}</button>
+                        )}
                       </div>
                     </div>
 
