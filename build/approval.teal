@@ -2,23 +2,23 @@
 txn ApplicationID
 int 0
 ==
-bnz main_l26
+bnz main_l38
 txn OnCompletion
 int OptIn
 ==
-bnz main_l25
+bnz main_l37
 txn OnCompletion
 int CloseOut
 ==
-bnz main_l24
+bnz main_l36
 txn OnCompletion
 int UpdateApplication
 ==
-bnz main_l23
+bnz main_l35
 txn OnCompletion
 int DeleteApplication
 ==
-bnz main_l22
+bnz main_l34
 txn OnCompletion
 int NoOp
 ==
@@ -32,15 +32,15 @@ assert
 txna ApplicationArgs 0
 byte "Add1"
 ==
-bnz main_l21
+bnz main_l31
 txna ApplicationArgs 0
 byte "Add2"
 ==
-bnz main_l20
+bnz main_l28
 txna ApplicationArgs 0
 byte "Add3"
 ==
-bnz main_l19
+bnz main_l25
 txna ApplicationArgs 0
 byte "vote"
 ==
@@ -54,96 +54,83 @@ app_local_get_ex
 store 1
 store 2
 load 1
-bnz main_l18
+bnz main_l24
 int 0
 byte "voted_accounts"
 app_global_get_ex
 store 3
 store 4
 load 3
-bnz main_l17
+bnz main_l23
 load 3
-bnz main_l16
+bnz main_l22
+int 0
+global CurrentApplicationID
+byte "voted"
+app_local_get_ex
+store 1
+store 2
+load 1
+bnz main_l21
+byte "Count1"
+app_global_get
+store 0
+byte "Count1"
+load 0
+int 1
++
+app_global_put
+int 1
+return
+int 0
+global CurrentApplicationID
+byte "voted"
+app_local_get_ex
+store 1
+store 2
+load 1
+byte "Count2"
+app_global_get
+store 0
+byte "Count2"
+load 0
+int 1
++
+app_global_put
+int 1
+return
+int 0
+global CurrentApplicationID
+byte "voted"
+app_local_get_ex
+store 1
+store 2
+load 1
+byte "Count3"
+app_global_get
+store 0
+byte "Count3"
+load 0
+int 1
++
+app_global_put
+int 1
+return
 int 0
 byte "voted"
 int 1
 app_local_put
 byte "voted_accounts"
-int 1
-app_global_put
-byte "Count1"
-app_global_get
-store 0
-byte "Count1"
-load 0
-int 1
-+
+txn Sender
 app_global_put
 int 1
 return
-byte "Count2"
-app_global_get
-store 0
-byte "Count2"
-load 0
-int 1
-+
-app_global_put
-int 1
-return
-byte "Count3"
-app_global_get
-store 0
-byte "Count3"
-load 0
-int 1
-+
-app_global_put
-int 1
-return
-int 1
-return
-main_l16:
 int 0
 return
-main_l17:
 int 0
-return
-main_l18:
-int 0
-return
-main_l19:
-byte "Count3"
-app_global_get
-store 0
-byte "Count3"
-load 0
-int 1
-+
-app_global_put
-int 1
-return
-main_l20:
-byte "Count2"
-app_global_get
-store 0
-byte "Count2"
-load 0
-int 1
-+
-app_global_put
-int 1
 return
 main_l21:
-byte "Count1"
-app_global_get
-store 0
-byte "Count1"
-load 0
-int 1
-+
-app_global_put
-int 1
+int 0
 return
 main_l22:
 int 0
@@ -152,12 +139,87 @@ main_l23:
 int 0
 return
 main_l24:
-int 1
+int 0
 return
 main_l25:
+int 0
+global CurrentApplicationID
+byte "voted"
+app_local_get_ex
+store 1
+store 2
+load 1
+bnz main_l27
+byte "Count3"
+app_global_get
+store 0
+byte "Count3"
+load 0
+int 1
++
+app_global_put
 int 1
 return
-main_l26:
+main_l27:
+int 0
+return
+main_l28:
+int 0
+global CurrentApplicationID
+byte "voted"
+app_local_get_ex
+store 1
+store 2
+load 1
+bnz main_l30
+byte "Count2"
+app_global_get
+store 0
+byte "Count2"
+load 0
+int 1
++
+app_global_put
+int 1
+return
+main_l30:
+int 0
+return
+main_l31:
+int 0
+global CurrentApplicationID
+byte "voted"
+app_local_get_ex
+store 1
+store 2
+load 1
+bnz main_l33
+byte "Count1"
+app_global_get
+store 0
+byte "Count1"
+load 0
+int 1
++
+app_global_put
+int 1
+return
+main_l33:
+int 0
+return
+main_l34:
+int 0
+return
+main_l35:
+int 0
+return
+main_l36:
+int 1
+return
+main_l37:
+int 1
+return
+main_l38:
 byte "Count1"
 int 0
 app_global_put
