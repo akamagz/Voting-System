@@ -23,9 +23,13 @@ def approval():
 
     def add_count(count_key):
         return Seq(
-            scratchCount.store(App.globalGet(count_key)),
-            App.globalPut(count_key, scratchCount.load() + Int(1)),
-            Return(Int(1))
+                voted,
+                If(voted.hasValue(), Return(Int(0))),
+                scratchCount.store(App.globalGet(count_key)),
+                App.globalPut(count_key, scratchCount.load() + Int(1)),
+                App.localPut(Int(0), Bytes("voted"), Int(1)),
+                App.globalPut(Bytes("voted_accounts"), Txn.sender()),
+                Return(Int(1))
         )
 
     def account_has_voted():
@@ -38,20 +42,16 @@ def approval():
         )
 
     check_vote = Seq(
-        [
             voted,
             If(voted.hasValue(), Return(Int(0))),
             account_has_voted(),
             If(voted_accounts.hasValue(), Return(Int(0))),
+            add_count(Bytes("Count1")),
+            add_count(Bytes("Count2")),
+            add_count(Bytes("Count3")),
             App.localPut(Int(0), Bytes("voted"), Int(1)),
-            App.globalPut(Bytes("voted_accounts"), Int(1)),
-            Seq(
-                add_count(Bytes("Count1")),
-                add_count(Bytes("Count2")),
-                add_count(Bytes("Count3")),
-                Return(Int(1))
-            ),
-        ]
+            App.globalPut(Bytes("voted_accounts"), Txn.sender()),
+            Return(Int(1)) 
     )
 
     handle_noop = Seq(
@@ -60,7 +60,7 @@ def approval():
             [Txn.application_args[0] == Bytes("Add1"), add_count(Bytes("Count1"))],
             [Txn.application_args[0] == Bytes("Add2"), add_count(Bytes("Count2"))],
             [Txn.application_args[0] == Bytes("Add3"), add_count(Bytes("Count3"))],
-            [Txn.application_args[0] == Bytes("vote"), Seq(check_vote)]
+            [Txn.application_args[0] == Bytes("vote"), check_vote]
         )
     )
 
@@ -85,4 +85,3 @@ appFile.close()
 clearFile = open('clear.teal', 'w')
 clearFile.write(clear())
 clearFile.close()
-
