@@ -80,6 +80,13 @@ load 0
 int 1
 +
 app_global_put
+int 0
+byte "voted"
+int 1
+app_local_put
+byte "voted_accounts"
+txn Sender
+app_global_put
 int 1
 return
 int 0
@@ -97,6 +104,13 @@ load 0
 int 1
 +
 app_global_put
+int 0
+byte "voted"
+int 1
+app_local_put
+byte "voted_accounts"
+txn Sender
+app_global_put
 int 1
 return
 int 0
@@ -113,6 +127,13 @@ byte "Count3"
 load 0
 int 1
 +
+app_global_put
+int 0
+byte "voted"
+int 1
+app_local_put
+byte "voted_accounts"
+txn Sender
 app_global_put
 int 1
 return
@@ -158,6 +179,13 @@ load 0
 int 1
 +
 app_global_put
+int 0
+byte "voted"
+int 1
+app_local_put
+byte "voted_accounts"
+txn Sender
+app_global_put
 int 1
 return
 main_l27:
@@ -180,6 +208,13 @@ load 0
 int 1
 +
 app_global_put
+int 0
+byte "voted"
+int 1
+app_local_put
+byte "voted_accounts"
+txn Sender
+app_global_put
 int 1
 return
 main_l30:
@@ -201,6 +236,13 @@ byte "Count1"
 load 0
 int 1
 +
+app_global_put
+int 0
+byte "voted"
+int 1
+app_local_put
+byte "voted_accounts"
+txn Sender
 app_global_put
 int 1
 return
